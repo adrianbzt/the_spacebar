@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use Michelf\MarkdownInterface;
+use App\Service\MarkdownHelper;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,11 +26,9 @@ class ArticleController extends AbstractController
      * @param $slug
      * @return Response
      */
-    public function show($slug, Environment $twigEnv, MarkdownInterface $markdown, AdapterInterface $cache)
+    public function show($slug, Environment $twigEnv, MarkdownHelper $markdownHelper)
     {
         $response = sprintf('New space work in progress! %s', $slug);
-
-        dump($cache); die;
 
         $comments = [
             "Ana are mere!",
@@ -45,16 +42,7 @@ spanning multiple **lines**
 using heredoc __syntax__.
 EOD;
 
-        $articleContent = $markdown->transform($articleContent);
-
-        $item = $cache->getItem('markdown_' . md5($articleContent));
-
-        if (!$item->isHit()) {
-            $item->set($markdown->transform(($articleContent)));
-            $cache->save($item);
-        }
-
-        $articleContent = $item->get();
+        $articleContent = $markdownHelper->parse($articleContent);
 
 
         $html = $twigEnv->render('article/show.html.twig',
