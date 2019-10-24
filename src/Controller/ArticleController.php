@@ -37,7 +37,7 @@ class ArticleController extends AbstractController
         ];
 
         $articleContent = <<<EOD
-Example **of** string
+Example **of** string bacon string
 spanning multiple **lines**
 using heredoc __syntax__.
 EOD;
