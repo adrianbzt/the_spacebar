@@ -33,7 +33,7 @@ class ArticleController extends AbstractController
         if ($slug == 'why-asteriods-taste-like-bacon') {
             $message = $slack->createMessage();
 
-            $text = "[" . date('Y-m-d H:i:s', time()) . "] This is a random test message " .  $slug;
+            $text = "[" . date('Y-m-d H:i:s', time()) . "] This is a random test message X " .  $slug;
 
             $message
                 ->to('#thespacebar')
