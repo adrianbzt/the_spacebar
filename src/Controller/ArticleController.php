@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MarkdownHelper;
-use Nexy\Slack\Client;
+use App\Service\SlackClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,22 +27,10 @@ class ArticleController extends AbstractController
      * @param $slug
      * @return Response
      */
-    public function show($slug, Environment $twigEnv, MarkdownHelper $markdownHelper, bool $isDebug, Client $slack)
+    public function show($slug, Environment $twigEnv, MarkdownHelper $markdownHelper, bool $isDebug, SlackClient $slack)
     {
 
-        if ($slug == 'why-asteriods-taste-like-bacon') {
-            $message = $slack->createMessage();
-
-            $text = "[" . date('Y-m-d H:i:s', time()) . "] This is a random test message X " .  $slug;
-
-            $message
-                ->to('#thespacebar')
-                ->from('the_spacebar_app')
-                ->withIcon(':poop:')
-                ->setText($text);
-
-            $slack->sendMessage($message);
-        }
+        $slack->sendMessage('Khan', "Ola Ola e");
 
         $response = sprintf('New space work in progress! %s', $slug);
 
